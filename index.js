@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -8,6 +9,7 @@ const app = express();
  */
 app.use(cors()); // 解决跨域
 app.use(express.json()); // 转json
+app.use("/static", express.static(path.join(__dirname, "static")));
 
 // 载入 admin 模块
 require('./src/routes/admin')(app);

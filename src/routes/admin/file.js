@@ -14,7 +14,8 @@ module.exports = app => {
     // 上传文件
     router.post('/admin/upload', fileUpload.single('avatar'), async (req, res) => {
         const { file } = req;
-        console.log(req)
+
+        file.url = `http://localhost:4001/static/${file.filename}`;
         res.send(file);
     });
 
