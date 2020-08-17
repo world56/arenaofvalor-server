@@ -12,36 +12,38 @@ module.exports = app => {
     }, router);
 
 
-    // 获取标签分类-列表
+    // 列表
     router.get('/', async (req, res) => {
         const optionParam = {};
         if (req.Model.modelName === 'Category') {
             optionParam.populate = 'parent';
         };
+        console.log('@', req.params._id)
         const DBres = await req.Model.find().setOptions(optionParam);
         res.send(DBres);
     });
 
-    // 获取标签分类-详情
-    // router.get('/categories:_id', async (req, res) => {
-    //     const DBres = await CategoryModel.findById(req.body);
-    //     res.send(DBres);
-    // });
+    // 详情
+    router.get('/:_id', async (req, res) => {
+        console.log('@param', req.params)
+        const DBres = await req.Model.findById(req.params._id);
+        res.send(DBres);
+    });
 
-    // 新增标签
+    // 新增
     router.post('/', async (req, res) => {
         const model = await req.Model.create(req.body);
         res.send(model);
     });
 
-    // 编辑标签
+    // 编辑
     router.put('/', async (req, res) => {
         const { body } = req;
         const model = await req.Model.findByIdAndUpdate(body._id, body);
         res.send(model);
     });
 
-    // 删除标签 
+    // 删除
     router.delete('/', async (req, res) => {
         const { query } = req;
         await req.Model.findByIdAndDelete(query._id, query);
