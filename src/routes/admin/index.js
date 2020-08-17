@@ -5,7 +5,7 @@ const router = express.Router({ mergeParams: true });
 module.exports = app => {
 
     // 处理参数&找到模块
-    app.use('/admin/rest/:resource', async (req, res, next) => {
+    app.use('/admin/rest/:resource', async(req, res, next) => {
         const Model = getModel(req.params.resource);
         req.Model = Model;
         next();
@@ -18,14 +18,12 @@ module.exports = app => {
         if (req.Model.modelName === 'Category') {
             optionParam.populate = 'parent';
         };
-        console.log('@', req.params._id)
         const DBres = await req.Model.find().setOptions(optionParam);
         res.send(DBres);
     });
 
     // 详情
     router.get('/:_id', async (req, res) => {
-        console.log('@param', req.params)
         const DBres = await req.Model.findById(req.params._id);
         res.send(DBres);
     });
